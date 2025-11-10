@@ -181,13 +181,13 @@ export default function Home() {
     <div className="min-h-screen bg-gradient-to-br from-purple-600 via-purple-500 to-indigo-500">
       {/* Header */}
       <header className="bg-purple-700/50 backdrop-blur-sm border-b border-white/10">
-        <div className="max-w-7xl mx-auto px-6 py-4">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 py-4">
           <h1 className="text-3xl font-bold text-white italic">Speso</h1>
         </div>
       </header>
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-6 py-10 pb-24">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 py-10 pb-24">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-12 items-start">
           {/* Left Side - Config Panel */}
           <div className="space-y-8">
@@ -232,7 +232,7 @@ export default function Home() {
 
       {/* Footer */}
       <footer className="bg-white/10 backdrop-blur-sm border-t border-white/10 mt-12">
-        <div className="max-w-7xl mx-auto px-6 py-4 text-center text-white/80 text-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 py-4 text-center text-white/80 text-sm">
           © 2025. Speso Technologies Limited
         </div>
       </footer>
