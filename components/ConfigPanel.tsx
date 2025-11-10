@@ -1,5 +1,4 @@
 'use client';
-
 import React, { useState } from 'react';
 import { NetworkOperator, SessionState } from '@/lib/types';
 
@@ -41,7 +40,8 @@ const ConfigPanel: React.FC<ConfigPanelProps> = ({
           value={hostUrl}
           onChange={(e) => setHostUrl(e.target.value)}
           placeholder="eg. https://a924d784.ngrok.io"
-          className="w-full px-6 py-5 rounded-xl bg-white text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white/60 border-2 border-gray-200 shadow-sm transition-all text-base"
+          className="w-full rounded-xl bg-white text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white/60 border-2 border-gray-200 shadow-sm transition-all text-base"
+          style={{ padding: '16px 20px' }}
         />
       </div>
 
@@ -51,7 +51,8 @@ const ConfigPanel: React.FC<ConfigPanelProps> = ({
         </label>
         <select
           disabled
-          className="w-full pl-6 pr-10 py-5 rounded-xl bg-white/80 text-gray-600 cursor-not-allowed appearance-none border-2 border-gray-200/60 shadow-sm text-base"
+          className="w-full rounded-xl bg-white/80 text-gray-600 cursor-not-allowed appearance-none border-2 border-gray-200/60 shadow-sm text-base"
+          style={{ padding: '16px 20px' }}
         >
           <option>Select request method</option>
         </select>
@@ -64,7 +65,8 @@ const ConfigPanel: React.FC<ConfigPanelProps> = ({
         <select
           value={network}
           onChange={(e) => setNetwork(e.target.value as NetworkOperator)}
-          className="w-full pl-6 pr-10 py-5 rounded-xl bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-purple-200 border-2 border-gray-200 appearance-none cursor-pointer transition-all shadow-sm text-base"
+          className="w-full rounded-xl bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-purple-200 border-2 border-gray-200 appearance-none cursor-pointer transition-all shadow-sm text-base"
+          style={{ padding: '16px 20px' }}
         >
           <option value="">Select network operator</option>
           {networks.map((net) => (
@@ -84,7 +86,8 @@ const ConfigPanel: React.FC<ConfigPanelProps> = ({
           value={phoneNumber}
           onChange={(e) => setPhoneNumber(e.target.value)}
           placeholder="eg. 0546628393"
-          className="w-full px-6 py-5 rounded-xl bg-white text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white/60 border-2 border-gray-200 shadow-sm transition-all text-base"
+          className="w-full rounded-xl bg-white text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white/60 border-2 border-gray-200 shadow-sm transition-all text-base"
+          style={{ padding: '16px 20px' }}
         />
       </div>
 
@@ -94,7 +97,8 @@ const ConfigPanel: React.FC<ConfigPanelProps> = ({
         </label>
         <select
           disabled
-          className="w-full pl-6 pr-10 py-5 rounded-xl bg-white/80 text-gray-600 cursor-not-allowed appearance-none border-2 border-gray-200/60 shadow-sm text-base"
+          className="w-full rounded-xl bg-white/80 text-gray-600 cursor-not-allowed appearance-none border-2 border-gray-200/60 shadow-sm text-base"
+          style={{ padding: '16px 20px' }}
         >
           <option>Select aggregator</option>
         </select>
