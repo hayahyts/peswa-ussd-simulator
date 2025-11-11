@@ -170,7 +170,8 @@ export default function Home() {
   // Reset session
   const handleReset = () => {
     if (currentSessionId) {
-      sessionStore.resetSession(currentSessionId);
+      sessionStore.deleteSession(currentSessionId);
+      setCurrentSessionId(null);
       setCurrentResponse(null);
       setSessions(sessionStore.getAllSessions());
     } else {
