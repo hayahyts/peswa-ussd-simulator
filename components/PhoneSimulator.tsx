@@ -42,91 +42,201 @@ const PhoneSimulator: React.FC<PhoneSimulatorProps> = ({
   };
 
   return (
-    <div className="relative w-full max-w-sm mx-auto">
-      {/* Phone Frame with shadow and border */}
-      <div className="bg-white rounded-[2.5rem] p-8 shadow-2xl border-8 border-gray-100">
-        {/* USSD Screen Area */}
-        <div className="bg-gray-50 rounded-2xl min-h-[500px] p-8 flex flex-col">
-          <h2 className="text-xl font-bold text-gray-800 mb-6 text-center">
+    <div 
+      style={{
+        width: '320px',
+        height: '650px',
+        background: '#1F2937',
+        borderRadius: '40px',
+        padding: '15px',
+        boxShadow: '0 20px 40px -10px rgba(84, 61, 154, 0.2), 0 10px 20px -5px rgba(0, 0, 0, 0.1), 0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+        position: 'relative',
+        transform: 'translateY(50px)',
+        animation: 'slideInRight 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s both, float 3s ease-in-out 1.5s infinite'
+      }}
+    >
+      {/* Phone Notch */}
+      <div 
+        style={{
+          position: 'absolute',
+          top: '15px',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          width: '140px',
+          height: '28px',
+          background: '#1F2937',
+          borderRadius: '0 0 20px 20px',
+          zIndex: 10,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: '8px'
+        }}
+      >
+        <div style={{
+          width: '10px',
+          height: '10px',
+          background: '#0F172A',
+          borderRadius: '50%'
+        }}></div>
+        <div style={{
+          width: '50px',
+          height: '5px',
+          background: '#0F172A',
+          borderRadius: '10px'
+        }}></div>
+      </div>
+
+      {/* Phone Screen */}
+      <div 
+        style={{
+          width: '100%',
+          height: '100%',
+          background: 'linear-gradient(180deg, #F9FAFB 0%, #F3F4F6 100%)',
+          borderRadius: '28px',
+          padding: '50px 25px 25px',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          position: 'relative',
+          overflow: 'hidden'
+        }}
+      >
+        {/* USSD Interface */}
+        <div style={{ width: '100%', textAlign: 'center' }}>
+          <h2 style={{
+            fontSize: '1.15rem',
+            fontWeight: 600,
+            color: '#1F2937',
+            marginBottom: '2rem'
+          }}>
             Enter USSD Code
           </h2>
 
-          {/* USSD Display */}
-          <div className="flex-1 bg-white rounded-xl p-5 mb-5 overflow-y-auto shadow-sm border border-gray-100">
-            <UssdScreen response={currentResponse} isLoading={isLoading} />
-          </div>
-
-          {/* Input Field */}
-          <div className="mb-4">
+          {/* USSD Input Wrapper */}
+          <div style={{
+            background: '#FFFFFF',
+            borderRadius: '0.75rem',
+            padding: '1.5rem',
+            marginBottom: '1.5rem',
+            boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1)'
+          }}>
             <input
               type="text"
               value={userInput}
               onChange={(e) => setUserInput(e.target.value)}
               onKeyPress={handleKeyPress}
-              placeholder={sessionActive ? "Enter your response" : "eg.*721#"}
+              placeholder="eg.*721#"
               disabled={isLoading}
-              className="w-full px-6 py-5 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-purple-500 text-gray-800 disabled:bg-gray-100 disabled:cursor-not-allowed transition-all shadow-sm text-base"
+              maxLength={20}
+              style={{
+                padding: '1rem',
+                fontSize: '1.5rem',
+                fontWeight: 600,
+                letterSpacing: '2px',
+                borderRadius: '0.5rem',
+                background: '#F9FAFB',
+                transition: 'all 0.2s ease'
+              }}
+              className="w-full text-center text-gray-800 border-2 border-gray-200 focus:outline-none focus:border-purple-600 disabled:bg-gray-100 disabled:cursor-not-allowed placeholder:text-gray-400 placeholder:font-medium"
+              onFocus={(e) => e.target.style.boxShadow = '0 0 0 3px rgba(84, 61, 154, 0.1)'}
+              onBlur={(e) => e.target.style.boxShadow = 'none'}
             />
           </div>
 
-          {/* Action Buttons */}
-          <div className="space-y-3">
+          {/* USSD Actions */}
+          <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '0.75rem'
+          }}>
             <button
               onClick={handleSend}
               disabled={isLoading}
-              className="w-full bg-purple-600 hover:bg-purple-700 disabled:bg-purple-300 text-white font-semibold py-4 rounded-xl transition-colors flex items-center justify-center gap-2 disabled:cursor-not-allowed shadow-sm text-base"
+              style={{
+                width: '100%',
+                padding: '1rem 1.5rem',
+                fontSize: '1rem',
+                fontWeight: 600,
+                borderRadius: '0.5rem',
+                border: 'none',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '0.5rem',
+                transition: 'all 0.2s ease',
+                fontFamily: 'var(--font-family)',
+                background: '#543d9a',
+                color: '#FFFFFF',
+                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1)'
+              }}
+              className={isLoading ? 'opacity-50 cursor-not-allowed' : ''}
+              onMouseEnter={(e) => {
+                if (!isLoading) {
+                  e.currentTarget.style.background = '#3d2c70';
+                  e.currentTarget.style.boxShadow = '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1)';
+                  e.currentTarget.style.transform = 'translateY(-2px)';
+                }
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = '#543d9a';
+                e.currentTarget.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1)';
+                e.currentTarget.style.transform = 'translateY(0)';
+              }}
+              onMouseDown={(e) => e.currentTarget.style.transform = 'translateY(0)'}
             >
-              {isLoading ? (
-                <>
-                  <svg
-                    className="animate-spin h-5 w-5 text-white"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                  >
-                    <circle
-                      className="opacity-25"
-                      cx="12"
-                      cy="12"
-                      r="10"
-                      stroke="currentColor"
-                      strokeWidth="4"
-                    ></circle>
-                    <path
-                      className="opacity-75"
-                      fill="currentColor"
-                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                    ></path>
-                  </svg>
-                  <span>Processing...</span>
-                </>
-              ) : (
-                <>
-                  <svg
-                    className="w-5 h-5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M14 5l7 7m0 0l-7 7m7-7H3"
-                    />
-                  </svg>
-                  <span>Send</span>
-                </>
-              )}
+              <svg
+                style={{ width: '18px', height: '18px' }}
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M5 12h14m-7-7l7 7-7 7"
+                />
+              </svg>
+              <span>Send</span>
             </button>
 
             <button
               onClick={onReset}
               disabled={isLoading}
-              className="w-full bg-white hover:bg-gray-50 disabled:bg-gray-100 text-gray-800 font-semibold py-4 rounded-xl transition-colors flex items-center justify-center gap-2 disabled:cursor-not-allowed border-2 border-gray-200 text-base"
+              style={{
+                width: '100%',
+                padding: '1rem 1.5rem',
+                fontSize: '1rem',
+                fontWeight: 600,
+                borderRadius: '0.5rem',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '0.5rem',
+                transition: 'all 0.2s ease',
+                fontFamily: 'var(--font-family)',
+                background: '#FFFFFF',
+                color: '#6B7280',
+                border: '2px solid #E5E7EB'
+              }}
+              className={isLoading ? 'opacity-50 cursor-not-allowed' : ''}
+              onMouseEnter={(e) => {
+                if (!isLoading) {
+                  e.currentTarget.style.background = '#F9FAFB';
+                  e.currentTarget.style.borderColor = '#D1D5DB';
+                }
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = '#FFFFFF';
+                e.currentTarget.style.borderColor = '#E5E7EB';
+              }}
             >
               <svg
-                className="w-5 h-5"
+                style={{ width: '18px', height: '18px' }}
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"

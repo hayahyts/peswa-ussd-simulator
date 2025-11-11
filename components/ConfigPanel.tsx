@@ -30,43 +30,146 @@ const ConfigPanel: React.FC<ConfigPanelProps> = ({
   const networks: NetworkOperator[] = ['MTN', 'Vodafone', 'AirtelTigo'];
 
   return (
-    <div className="space-y-4">
-      <div>
-        <label className="block text-white text-sm font-medium mb-2">
+    <form>
+      {/* Host URL */}
+      <div 
+        className="flex items-center"
+        style={{
+          marginBottom: '1.5rem',
+          gap: '1.5rem'
+        }}
+      >
+        <label 
+          htmlFor="hostUrl" 
+          className="font-semibold text-gray-800"
+          style={{
+            display: 'block',
+            fontSize: '0.875rem',
+            minWidth: '120px',
+            flexShrink: 0,
+            marginBottom: 0
+          }}
+        >
           Host URL
         </label>
         <input
-          type="text"
+          id="hostUrl"
+          type="url"
           value={hostUrl}
           onChange={(e) => setHostUrl(e.target.value)}
           placeholder="eg. https://a924d784.ngrok.io"
-          className="w-full rounded-xl bg-white text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white/60 border-2 border-gray-200 shadow-sm transition-all text-base"
-          style={{ padding: '8px 16px' }}
+          style={{
+            flex: 1,
+            padding: '0.75rem 1rem',
+            fontSize: '0.95rem',
+            border: '1.5px solid #E5E7EB',
+            borderRadius: '0.5rem',
+            background: '#FFFFFF',
+            transition: 'all 0.2s ease'
+          }}
+          className="text-gray-800 placeholder-gray-400 focus:outline-none"
+          onFocus={(e) => {
+            e.target.style.borderColor = '#543D9A';
+            e.target.style.boxShadow = '0 0 0 3px rgba(84, 61, 154, 0.1)';
+          }}
+          onBlur={(e) => {
+            e.target.style.borderColor = '#E5E7EB';
+            e.target.style.boxShadow = 'none';
+          }}
         />
       </div>
 
-      <div>
-        <label className="block text-white text-sm font-medium mb-2">
+      {/* Method */}
+      <div 
+        className="flex items-center"
+        style={{
+          marginBottom: '1.5rem',
+          gap: '1.5rem'
+        }}
+      >
+        <label 
+          htmlFor="method" 
+          className="font-semibold text-gray-800"
+          style={{
+            display: 'block',
+            fontSize: '0.875rem',
+            minWidth: '120px',
+            flexShrink: 0,
+            marginBottom: 0
+          }}
+        >
           Method
         </label>
         <select
+          id="method"
           disabled
-          className="w-full rounded-xl bg-white/80 text-gray-600 cursor-not-allowed appearance-none border-2 border-gray-200/60 shadow-sm text-base"
-          style={{ padding: '8px 16px' }}
+          style={{
+            flex: 1,
+            padding: '0.75rem 1rem',
+            fontSize: '0.95rem',
+            border: '1.5px solid #E5E7EB',
+            borderRadius: '0.5rem',
+            background: '#FFFFFF',
+            transition: 'all 0.2s ease',
+            backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M4 6L8 10L12 6' stroke='%236B7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")`,
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'right 1rem center',
+            paddingRight: '2.5rem',
+            opacity: 0.8
+          }}
+          className="text-gray-600 cursor-not-allowed appearance-none"
         >
           <option>Select request method</option>
         </select>
       </div>
 
-      <div>
-        <label className="block text-white text-sm font-medium mb-2">
+      {/* Network */}
+      <div 
+        className="flex items-center"
+        style={{
+          marginBottom: '1.5rem',
+          gap: '1.5rem'
+        }}
+      >
+        <label 
+          htmlFor="network" 
+          className="font-semibold text-gray-800"
+          style={{
+            display: 'block',
+            fontSize: '0.875rem',
+            minWidth: '120px',
+            flexShrink: 0,
+            marginBottom: 0
+          }}
+        >
           Network
         </label>
         <select
+          id="network"
           value={network}
           onChange={(e) => setNetwork(e.target.value as NetworkOperator)}
-          className="w-full rounded-xl bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-purple-200 border-2 border-gray-200 appearance-none cursor-pointer transition-all shadow-sm text-base"
-          style={{ padding: '8px 16px' }}
+          style={{
+            flex: 1,
+            padding: '0.75rem 1rem',
+            fontSize: '0.95rem',
+            border: '1.5px solid #E5E7EB',
+            borderRadius: '0.5rem',
+            background: '#FFFFFF',
+            transition: 'all 0.2s ease',
+            backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M4 6L8 10L12 6' stroke='%236B7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")`,
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'right 1rem center',
+            paddingRight: '2.5rem'
+          }}
+          className="text-gray-800 cursor-pointer appearance-none focus:outline-none"
+          onFocus={(e) => {
+            e.target.style.borderColor = '#543D9A';
+            e.target.style.boxShadow = '0 0 0 3px rgba(84, 61, 154, 0.1)';
+          }}
+          onBlur={(e) => {
+            e.target.style.borderColor = '#E5E7EB';
+            e.target.style.boxShadow = 'none';
+          }}
         >
           <option value="">Select network operator</option>
           {networks.map((net) => (
@@ -77,33 +180,98 @@ const ConfigPanel: React.FC<ConfigPanelProps> = ({
         </select>
       </div>
 
-      <div>
-        <label className="block text-white text-sm font-medium mb-2">
+      {/* Phone Number */}
+      <div 
+        className="flex items-center"
+        style={{
+          marginBottom: '1.5rem',
+          gap: '1.5rem'
+        }}
+      >
+        <label 
+          htmlFor="phoneNumber" 
+          className="font-semibold text-gray-800"
+          style={{
+            display: 'block',
+            fontSize: '0.875rem',
+            minWidth: '120px',
+            flexShrink: 0,
+            marginBottom: 0
+          }}
+        >
           Phone Number
         </label>
         <input
+          id="phoneNumber"
           type="tel"
           value={phoneNumber}
           onChange={(e) => setPhoneNumber(e.target.value)}
-          placeholder="eg. 0546628393"
-          className="w-full rounded-xl bg-white text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white/60 border-2 border-gray-200 shadow-sm transition-all text-base"
-          style={{ padding: '8px 16px' }}
+          placeholder="eg. 0546662893"
+          style={{
+            flex: 1,
+            padding: '0.75rem 1rem',
+            fontSize: '0.95rem',
+            border: '1.5px solid #E5E7EB',
+            borderRadius: '0.5rem',
+            background: '#FFFFFF',
+            transition: 'all 0.2s ease'
+          }}
+          className="text-gray-800 placeholder-gray-400 focus:outline-none"
+          onFocus={(e) => {
+            e.target.style.borderColor = '#543D9A';
+            e.target.style.boxShadow = '0 0 0 3px rgba(84, 61, 154, 0.1)';
+          }}
+          onBlur={(e) => {
+            e.target.style.borderColor = '#E5E7EB';
+            e.target.style.boxShadow = 'none';
+          }}
         />
       </div>
 
-      <div>
-        <label className="block text-white text-sm font-medium mb-2">
+      {/* Aggregator */}
+      <div 
+        className="flex items-center"
+        style={{
+          marginBottom: '1.5rem',
+          gap: '1.5rem'
+        }}
+      >
+        <label 
+          htmlFor="aggregator" 
+          className="font-semibold text-gray-800"
+          style={{
+            display: 'block',
+            fontSize: '0.875rem',
+            minWidth: '120px',
+            flexShrink: 0,
+            marginBottom: 0
+          }}
+        >
           Aggregator
         </label>
         <select
+          id="aggregator"
           disabled
-          className="w-full rounded-xl bg-white/80 text-gray-600 cursor-not-allowed appearance-none border-2 border-gray-200/60 shadow-sm text-base"
-          style={{ padding: '8px 16px' }}
+          style={{
+            flex: 1,
+            padding: '0.75rem 1rem',
+            fontSize: '0.95rem',
+            border: '1.5px solid #E5E7EB',
+            borderRadius: '0.5rem',
+            background: '#FFFFFF',
+            transition: 'all 0.2s ease',
+            backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M4 6L8 10L12 6' stroke='%236B7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")`,
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'right 1rem center',
+            paddingRight: '2.5rem',
+            opacity: 0.8
+          }}
+          className="text-gray-600 cursor-not-allowed appearance-none"
         >
           <option>Select aggregator</option>
         </select>
       </div>
-    </div>
+    </form>
   );
 };
 

@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 import ConfigPanel from '@/components/ConfigPanel';
 import PhoneSimulator from '@/components/PhoneSimulator';
 import RequestResponseLogger from '@/components/RequestResponseLogger';
+import UssdScreen from '@/components/UssdScreen';
 import { sessionStore } from '@/lib/sessionStore';
 import { UssdApiClient } from '@/lib/ussdApi';
 import {
@@ -178,64 +179,134 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-600 via-purple-500 to-indigo-500">
-      {/* Header */}
-      <header className="bg-purple-700/50 backdrop-blur-sm border-b border-white/10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 py-4">
-          <h1 className="text-3xl font-bold text-white italic">Speso</h1>
+    <div className="flex flex-col min-h-screen h-screen overflow-hidden">
+      {/* Row 1: Header - 5vh */}
+      <header 
+        style={{
+          height: '5vh',
+          minHeight: '50px',
+          background: 'linear-gradient(135deg, #543d9a 0%, #6b4fb8 100%)',
+          display: 'flex',
+          alignItems: 'center',
+          padding: '0 3rem',
+          position: 'relative',
+          zIndex: 10
+        }}
+      >
+        <div style={{
+          fontSize: '1.75rem',
+          fontWeight: 700,
+          color: '#FFFFFF',
+          fontStyle: 'italic',
+          letterSpacing: '-0.5px'
+        }}>
+          Peswa
         </div>
       </header>
 
-      {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 py-10 pb-24">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-12 items-start">
-          {/* Left Side - Config Panel */}
-          <div className="space-y-8">
-            <div className="text-white space-y-4">
-              <h2 className="text-xl font-medium leading-relaxed">
-                Intended for use by developers to test their endpoint
-                implementations before integration.
-              </h2>
-            </div>
+      {/* Row 2: Main Content - 72.5vh */}
+      <main 
+        style={{
+          height: '72.5vh',
+          minHeight: '500px',
+          background: 'linear-gradient(135deg, #543d9a 0%, #6b4fb8 100%)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: '3rem',
+          padding: '0 3rem 1.5rem 3rem',
+          position: 'relative',
+          overflow: 'visible'
+        }}
+      >
+        {/* Config Panel */}
+        <div 
+          style={{
+            flex: '0 0 45%',
+            maxWidth: '550px',
+            background: '#FFFFFF',
+            borderRadius: '1rem',
+            padding: '2.5rem',
+            boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1)',
+            height: 'fit-content',
+            animation: 'slideInLeft 0.6s ease-out'
+          }}
+        >
+          <p 
+            style={{
+              fontSize: '0.9rem',
+              lineHeight: 1.6,
+              color: '#6B7280',
+              marginBottom: '1.25rem',
+              paddingBottom: '1.25rem',
+              borderBottom: '1px solid #E5E7EB'
+            }}
+          >
+            Intended for use by developers to test their endpoint implementations before integration.
+          </p>
+          
+          <ConfigPanel
+            hostUrl={hostUrl}
+            setHostUrl={setHostUrl}
+            network={network}
+            setNetwork={setNetwork}
+            phoneNumber={phoneNumber}
+            setPhoneNumber={setPhoneNumber}
+            sessions={sessions}
+            currentSessionId={currentSessionId}
+            onSessionChange={handleSessionChange}
+            onNewSession={handleNewSession}
+          />
 
-            <div className="space-y-6">
-              <ConfigPanel
-                hostUrl={hostUrl}
-                setHostUrl={setHostUrl}
-                network={network}
-                setNetwork={setNetwork}
-                phoneNumber={phoneNumber}
-                setPhoneNumber={setPhoneNumber}
-                sessions={sessions}
-                currentSessionId={currentSessionId}
-                onSessionChange={handleSessionChange}
-                onNewSession={handleNewSession}
-              />
+          {/* Response Display */}
+          {currentResponse && (
+            <div className="mt-6 pt-6 border-t border-gray-200">
+              <h3 className="text-sm font-semibold text-gray-800 mb-3">Current Response:</h3>
+              <UssdScreen response={currentResponse} isLoading={isLoading} />
             </div>
-          </div>
+          )}
+        </div>
 
-          {/* Right Side - Phone Simulator (Picture in Picture) */}
-          <div className="flex justify-center lg:justify-end sticky top-8">
-            <PhoneSimulator
-              currentResponse={currentResponse}
-              onSend={handleSend}
-              onReset={handleReset}
-              isLoading={isLoading}
-              sessionActive={currentSessionId !== null}
-            />
-          </div>
+        {/* Phone Simulator */}
+        <div 
+          className="flex justify-center relative"
+          style={{
+            flex: '0 0 35%',
+            maxWidth: '380px',
+            zIndex: 1
+          }}
+        >
+          <PhoneSimulator
+            currentResponse={currentResponse}
+            onSend={handleSend}
+            onReset={handleReset}
+            isLoading={isLoading}
+            sessionActive={currentSessionId !== null}
+          />
         </div>
       </main>
 
-      {/* Logger - Fixed to bottom */}
-      <RequestResponseLogger logs={logs} />
-
-      {/* Footer */}
-      <footer className="bg-white/10 backdrop-blur-sm border-t border-white/10 mt-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 py-4 text-center text-white/80 text-sm">
-          © 2025. Speso Technologies Limited
-        </div>
+      {/* Row 3: Footer - 7.5vh */}
+      <footer 
+        style={{
+          height: '7.5vh',
+          minHeight: '60px',
+          background: '#F9FAFB',
+          borderTop: '1px solid #E5E7EB',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          padding: '0 3rem',
+          position: 'relative',
+          zIndex: 0
+        }}
+      >
+        <span style={{ fontSize: '0.875rem', color: '#6B7280' }}>© 2025. Peswa Finance</span>
+        <span style={{ fontSize: '0.875rem', color: '#9CA3AF', fontWeight: 500 }}>v1.0</span>
       </footer>
+
+      {/* Row 4: Logger - Fixed Bottom */}
+      <RequestResponseLogger logs={logs} />
     </div>
   );
 }
