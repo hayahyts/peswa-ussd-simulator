@@ -5,7 +5,6 @@ import { v4 as uuidv4 } from 'uuid';
 import ConfigPanel from '@/components/ConfigPanel';
 import PhoneSimulator from '@/components/PhoneSimulator';
 import RequestResponseLogger from '@/components/RequestResponseLogger';
-import UssdScreen from '@/components/UssdScreen';
 import { sessionStore } from '@/lib/sessionStore';
 import { UssdApiClient } from '@/lib/ussdApi';
 import {
@@ -257,14 +256,6 @@ export default function Home() {
             onSessionChange={handleSessionChange}
             onNewSession={handleNewSession}
           />
-
-          {/* Response Display */}
-          {currentResponse && (
-            <div className="mt-6 pt-6 border-t border-gray-200">
-              <h3 className="text-sm font-semibold text-gray-800 mb-3">Current Response:</h3>
-              <UssdScreen response={currentResponse} isLoading={isLoading} />
-            </div>
-          )}
         </div>
 
         {/* Phone Simulator */}
@@ -282,6 +273,7 @@ export default function Home() {
             onReset={handleReset}
             isLoading={isLoading}
             sessionActive={currentSessionId !== null}
+            network={network}
           />
         </div>
       </main>

@@ -11,10 +11,14 @@ interface UssdScreenProps {
 const UssdScreen: React.FC<UssdScreenProps> = ({ response, isLoading }) => {
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center h-full">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading...</p>
+      <div className="empty-state">
+        <div className="typing-indicator">
+          <div className="typing-dot"></div>
+          <div className="typing-dot"></div>
+          <div className="typing-dot"></div>
+        </div>
+        <div className="empty-text" style={{ marginTop: '12px' }}>
+          Loading...
         </div>
       </div>
     );
@@ -22,26 +26,20 @@ const UssdScreen: React.FC<UssdScreenProps> = ({ response, isLoading }) => {
 
   if (!response) {
     return (
-      <div className="flex items-center justify-center h-full text-center p-4">
-        <div>
-          <svg
-            className="w-16 h-16 text-gray-300 mx-auto mb-4"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"
-            />
-          </svg>
-          <p className="text-gray-500 text-sm">
-            Dial a USSD code to start
-            <br />
-            <span className="text-xs text-gray-400">Example: *721#</span>
-          </p>
+      <div className="empty-state">
+        <svg className="empty-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"
+          />
+        </svg>
+        <div className="empty-text">
+          Dial a USSD code to start
+        </div>
+        <div className="empty-hint">
+          Example: *721#
         </div>
       </div>
     );
@@ -50,85 +48,115 @@ const UssdScreen: React.FC<UssdScreenProps> = ({ response, isLoading }) => {
   const { USSDResp } = response;
   const action = USSDResp.action.toLowerCase();
 
+  // Parse menus if it's a string representation of an array
+  const parseMenus = (menus: string | string[]): { isArray: boolean; items: string[] } => {
+    if (Array.isArray(menus)) {
+      return { isArray: true, items: menus };
+    }
+    
+    // Check if it's a string that looks like an array: [ "item1", "item2" ]
+    if (typeof menus === 'string') {
+      const trimmed = menus.trim();
+      if (trimmed.startsWith('[') && trimmed.endsWith(']')) {
+        try {
+          // Try JSON parsing first
+          const parsed = JSON.parse(trimmed);
+          if (Array.isArray(parsed)) {
+            return { isArray: true, items: parsed };
+          }
+        } catch (e) {
+          // If JSON parsing fails, try manual parsing
+          const cleaned = trimmed.slice(1, -1); // Remove [ and ]
+          const items = cleaned.split(',').map(item => {
+            // Remove quotes and trim
+            let cleaned = item.trim();
+            // Remove surrounding quotes (both single and double)
+            if ((cleaned.startsWith('"') && cleaned.endsWith('"')) || 
+                (cleaned.startsWith("'") && cleaned.endsWith("'"))) {
+              cleaned = cleaned.slice(1, -1);
+            }
+            return cleaned;
+          }).filter(item => item.length > 0);
+          
+          if (items.length > 0) {
+            return { isArray: true, items };
+          }
+        }
+      }
+    }
+    
+    // Return as single item if not parseable
+    return { isArray: false, items: [String(menus)] };
+  };
+
+  const parsedMenus = parseMenus(USSDResp.menus);
+  const shouldDisplayAsMenu = parsedMenus.isArray || (action === 'menu' && parsedMenus.items.length > 0);
+
   return (
-    <div className="bg-gray-50 rounded-lg p-4 border border-gray-200 text-left">
+    <div className="response-card">
       {/* Title */}
       {USSDResp.title && (
-        <div className="font-semibold text-gray-800 text-sm pb-3 border-b border-gray-300 mb-3">
+        <div className="response-title">
           {USSDResp.title}
         </div>
       )}
 
       {/* Content */}
-      <div className="text-gray-700 text-sm">
-        {action === 'menu' && Array.isArray(USSDResp.menus) ? (
-          // Menu Response - Clean list format
-          <div className="space-y-2">
-            {USSDResp.menus.map((menuItem, index) => (
-              <div
-                key={index}
-                className="py-2.5 px-4 bg-white rounded-md border border-gray-200 hover:border-purple-300 transition-colors"
+      <div>
+        {shouldDisplayAsMenu ? (
+          // Menu Response - Display as individual menu items
+          <div className="menu-list">
+            {parsedMenus.items.map((menuItem, index) => (
+              <div 
+                key={`menu-${menuItem}-${index}`} 
+                className="menu-item"
+                style={{ animationDelay: `${index * 80}ms` }}
               >
-                <span className="text-gray-800 text-sm leading-relaxed">{menuItem}</span>
+                {menuItem}
               </div>
             ))}
           </div>
         ) : action === 'prompt' && typeof USSDResp.menus === 'string' ? (
           // Prompt Response
-          <div className="py-3 px-4 bg-blue-50 rounded-md border border-blue-200">
-            <p className="whitespace-pre-wrap leading-relaxed text-sm text-gray-800">{USSDResp.menus}</p>
+          <div className="prompt-message">
+            {USSDResp.menus}
           </div>
         ) : action === 'end' && typeof USSDResp.menus === 'string' ? (
           // End Response
-          <div className="py-3 px-4 bg-green-50 rounded-md border border-green-200">
-            <div className="flex items-start gap-3">
-              <svg
-                className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                />
-              </svg>
-              <p className="whitespace-pre-wrap flex-1 leading-relaxed text-sm text-gray-800">{USSDResp.menus}</p>
+          <div className="end-message">
+            <svg className="success-icon" width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+            <div>
+              {USSDResp.menus}
             </div>
           </div>
         ) : (
           // Fallback for unknown format
-          <div className="py-3 px-4 bg-gray-100 rounded-md border border-gray-200">
-            <p className="whitespace-pre-wrap leading-relaxed text-sm text-gray-800">
-              {typeof USSDResp.menus === 'string'
-                ? USSDResp.menus
-                : JSON.stringify(USSDResp.menus, null, 2)}
-            </p>
+          <div className="prompt-message">
+            {typeof USSDResp.menus === 'string'
+              ? USSDResp.menus
+              : JSON.stringify(USSDResp.menus, null, 2)}
           </div>
         )}
       </div>
 
       {/* Key/Footer */}
       {USSDResp.key && (
-        <div className="text-xs text-gray-500 border-t border-gray-300 pt-3 mt-3">
+        <div className="response-footer">
           {USSDResp.key}
         </div>
       )}
 
       {/* Action Badge */}
-      <div className="flex justify-end pt-2">
-        <span
-          className={`text-xs px-2.5 py-1 rounded-full font-medium ${
-            action === 'end'
-              ? 'bg-green-100 text-green-700'
-              : action === 'menu'
-              ? 'bg-blue-100 text-blue-700'
-              : 'bg-purple-100 text-purple-700'
-          }`}
-        >
-          {action.toUpperCase()}
+      <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+        <span className={`status-badge ${action}`}>
+          {action}
         </span>
       </div>
     </div>
