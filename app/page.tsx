@@ -19,8 +19,10 @@ import {
 export default function Home() {
   // Configuration state
   const [hostUrl, setHostUrl] = useState('http://localhost:8080/api/v1/loans/ussd');
+  const [method, setMethod] = useState('POST');
   const [network, setNetwork] = useState<NetworkOperator>('MTN');
   const [phoneNumber, setPhoneNumber] = useState('0546628393');
+  const [aggregator, setAggregator] = useState('Nsano');
 
   // Session state
   const [sessions, setSessions] = useState<SessionState[]>([]);
@@ -247,10 +249,14 @@ export default function Home() {
           <ConfigPanel
             hostUrl={hostUrl}
             setHostUrl={setHostUrl}
+            method={method}
+            setMethod={setMethod}
             network={network}
             setNetwork={setNetwork}
             phoneNumber={phoneNumber}
             setPhoneNumber={setPhoneNumber}
+            aggregator={aggregator}
+            setAggregator={setAggregator}
             sessions={sessions}
             currentSessionId={currentSessionId}
             onSessionChange={handleSessionChange}

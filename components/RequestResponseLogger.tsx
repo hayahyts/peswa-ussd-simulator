@@ -11,6 +11,17 @@ const RequestResponseLogger: React.FC<RequestResponseLoggerProps> = ({
   logs,
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
+  const [expandedRows, setExpandedRows] = useState<Set<string>>(new Set());
+
+  const toggleRow = (logId: string) => {
+    const newExpanded = new Set(expandedRows);
+    if (newExpanded.has(logId)) {
+      newExpanded.delete(logId);
+    } else {
+      newExpanded.add(logId);
+    }
+    setExpandedRows(newExpanded);
+  };
 
   return (
     <div 
@@ -137,63 +148,114 @@ const RequestResponseLogger: React.FC<RequestResponseLoggerProps> = ({
               </thead>
               <tbody>
                 {logs.map((log) => {
-                  const requestPreview = JSON.stringify(log.request).substring(0, 50);
-                  const responsePreview = log.response 
-                    ? JSON.stringify(log.response).substring(0, 50)
-                    : log.error?.substring(0, 50);
+                  const isRowExpanded = expandedRows.has(log.id);
+                  const requestStr = JSON.stringify(log.request, null, 2);
+                  const responseStr = log.response 
+                    ? JSON.stringify(log.response, null, 2)
+                    : log.error || 'No response';
                   
                   return (
-                    <tr 
-                      key={log.id}
-                      style={{ animation: 'slideInLeft 0.4s ease-out' }}
-                    >
-                      <td 
-                        className="text-gray-800"
-                        style={{
-                          padding: '0.75rem 1rem',
-                          borderBottom: '1px solid #E5E7EB'
+                    <React.Fragment key={log.id}>
+                      <tr 
+                        style={{ 
+                          animation: 'slideInLeft 0.4s ease-out',
+                          cursor: 'pointer',
+                          transition: 'background 0.2s ease'
                         }}
+                        onClick={() => toggleRow(log.id)}
+                        onMouseEnter={(e) => e.currentTarget.style.background = '#F9FAFB'}
+                        onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
                       >
-                        {new Date(log.timestamp).toLocaleString()}
-                      </td>
-                      <td 
-                        className="text-gray-800"
-                        style={{
-                          padding: '0.75rem 1rem',
-                          borderBottom: '1px solid #E5E7EB'
-                        }}
-                      >
-                        <code style={{ fontSize: '0.8rem' }}>
-                          {requestPreview}
-                          {requestPreview.length >= 50 ? '...' : ''}
-                        </code>
-                      </td>
-                      <td 
-                        className="text-gray-800"
-                        style={{
-                          padding: '0.75rem 1rem',
-                          borderBottom: '1px solid #E5E7EB'
-                        }}
-                      >
-                        <code style={{ fontSize: '0.8rem' }}>
-                          {responsePreview}
-                          {responsePreview && responsePreview.length >= 50 ? '...' : ''}
-                        </code>
-                      </td>
-                      <td style={{
-                        padding: '0.75rem 1rem',
-                        borderBottom: '1px solid #E5E7EB'
-                      }}>
-                        <span 
-                          style={{ 
-                            color: log.success ? '#10B981' : '#EF4444',
-                            fontWeight: 600
+                        <td 
+                          className="text-gray-800"
+                          style={{
+                            padding: '0.75rem 1rem',
+                            borderBottom: '1px solid #E5E7EB',
+                            verticalAlign: 'top'
                           }}
                         >
-                          {log.success ? 'Success' : 'Error'}
-                        </span>
-                      </td>
-                    </tr>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                            <svg
+                              style={{
+                                width: '16px',
+                                height: '16px',
+                                transition: 'transform 0.2s ease',
+                                transform: isRowExpanded ? 'rotate(90deg)' : 'rotate(0deg)',
+                                flexShrink: 0
+                              }}
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M9 5l7 7-7 7"
+                              />
+                            </svg>
+                            <span>{new Date(log.timestamp).toLocaleString()}</span>
+                          </div>
+                        </td>
+                        <td 
+                          className="text-gray-800"
+                          style={{
+                            padding: '0.75rem 1rem',
+                            borderBottom: '1px solid #E5E7EB',
+                            maxWidth: '250px',
+                            verticalAlign: 'top'
+                          }}
+                        >
+                          <code style={{ 
+                            fontSize: '0.8rem',
+                            whiteSpace: isRowExpanded ? 'pre-wrap' : 'nowrap',
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                            display: 'block'
+                          }}>
+                            {isRowExpanded ? requestStr : `${requestStr.substring(0, 80)}...`}
+                          </code>
+                        </td>
+                        <td 
+                          className="text-gray-800"
+                          style={{
+                            padding: '0.75rem 1rem',
+                            borderBottom: '1px solid #E5E7EB',
+                            maxWidth: '250px',
+                            verticalAlign: 'top'
+                          }}
+                        >
+                          <code style={{ 
+                            fontSize: '0.8rem',
+                            whiteSpace: isRowExpanded ? 'pre-wrap' : 'nowrap',
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                            display: 'block'
+                          }}>
+                            {isRowExpanded ? responseStr : `${responseStr.substring(0, 80)}...`}
+                          </code>
+                        </td>
+                        <td style={{
+                          padding: '0.75rem 1rem',
+                          borderBottom: '1px solid #E5E7EB',
+                          verticalAlign: 'top'
+                        }}>
+                          <span 
+                            style={{ 
+                              color: log.success ? '#10B981' : '#EF4444',
+                              fontWeight: 600
+                            }}
+                          >
+                            {log.success ? '✓ Success' : '✗ Error'}
+                          </span>
+                          {log.duration && (
+                            <div style={{ fontSize: '0.75rem', color: '#9CA3AF', marginTop: '0.25rem' }}>
+                              {log.duration}ms
+                            </div>
+                          )}
+                        </td>
+                      </tr>
+                    </React.Fragment>
                   );
                 })}
               </tbody>
