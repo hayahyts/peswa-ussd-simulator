@@ -1,4 +1,4 @@
-/* Speso USSD Simulator Theme */
+/* Peswa USSD Simulator Theme */
 /* Based on modern purple gradient design with clean, professional aesthetic */
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
@@ -278,4 +278,5 @@ label {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--border-dark);
 }
+
 

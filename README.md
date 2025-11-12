@@ -1,6 +1,6 @@
 # USSD Simulator
 
-A Next.js-based USSD simulator designed to test USSD endpoint implementations before integration. Built with TypeScript, Tailwind CSS, and featuring a beautiful purple gradient design inspired by Speso.
+A Next.js-based USSD simulator designed to test USSD endpoint implementations before integration. Built with TypeScript, Tailwind CSS, and featuring a beautiful purple gradient design inspired by Peswa.
 
 ![USSD Simulator](./public/simulator.speso.co-design.png)
 
@@ -251,11 +251,11 @@ npm run lint
 
 ## License
 
-© 2025 Speso Technologies Limited
+© 2025 Peswa Finance
 
 ## Support
 
-For issues and questions, please contact Speso Technologies Limited.
+For issues and questions, please contact Peswa Finance.
 
 ---
 

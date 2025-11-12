@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Speso | USSD Simulator",
+  title: "Peswa | USSD Simulator",
   description: "Test your USSD endpoint implementations before integration",
 };
 
