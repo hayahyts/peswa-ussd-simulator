@@ -191,4 +191,27 @@ header, footer, main {
     padding-left: 3rem !important;
     padding-right: 3rem !important;
   }
+  
+  main {
+    height: 72.5vh !important;
+  }
+}
+
+/* Mobile - full height minus header */
+@media (max-width: 1023px) {
+  main {
+    height: calc(100vh - 5vh) !important;
+  }
+  
+  /* Purple gradient on mobile */
+  body > div {
+    background: linear-gradient(135deg, #543d9a 0%, #6b4fb8 100%) !important;
+  }
+}
+
+/* Desktop - gray background below main */
+@media (min-width: 1024px) {
+  body > div {
+    background: #F3F4F6 !important;
+  }
 }

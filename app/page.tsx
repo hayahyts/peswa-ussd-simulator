@@ -209,11 +209,10 @@ export default function Home() {
         </div>
       </header>
 
-      {/* Row 2: Main Content - 72.5vh */}
+      {/* Row 2: Main Content */}
       <main 
         className="flex-col lg:flex-row justify-start lg:justify-center overflow-auto lg:overflow-visible"
         style={{
-          height: '72.5vh',
           minHeight: '500px',
           background: 'linear-gradient(135deg, #543d9a 0%, #6b4fb8 100%)',
           display: 'flex',
@@ -298,12 +297,12 @@ export default function Home() {
 
       {/* Row 3: Footer - 7.5vh */}
       <footer 
+        className="hidden lg:flex"
         style={{
           height: '7.5vh',
           minHeight: '60px',
-          background: '#F9FAFB',
+          background: '#F3F4F6',
           borderTop: '1px solid #E5E7EB',
-          display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
           position: 'relative',
@@ -317,7 +316,9 @@ export default function Home() {
       </footer>
 
       {/* Row 4: Logger - Fixed Bottom */}
-      <RequestResponseLogger logs={logs} />
+      <div className="hidden lg:block">
+        <RequestResponseLogger logs={logs} />
+      </div>
     </div>
   );
 }
