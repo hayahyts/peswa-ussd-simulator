@@ -43,10 +43,10 @@ const ConfigPanel: React.FC<ConfigPanelProps> = ({
     <form>
       {/* Host URL */}
       <div 
-        className="flex items-center"
+        className="flex flex-col lg:flex-row lg:items-center"
         style={{
           marginBottom: '1.5rem',
-          gap: '1.5rem'
+          gap: '0.5rem'
         }}
       >
         <label 
@@ -91,10 +91,10 @@ const ConfigPanel: React.FC<ConfigPanelProps> = ({
 
       {/* Method */}
       <div 
-        className="flex items-center"
+        className="flex flex-col lg:flex-row lg:items-center"
         style={{
           marginBottom: '1.5rem',
-          gap: '1.5rem'
+          gap: '0.5rem'
         }}
       >
         <label 
@@ -148,10 +148,10 @@ const ConfigPanel: React.FC<ConfigPanelProps> = ({
 
       {/* Network */}
       <div 
-        className="flex items-center"
+        className="flex flex-col lg:flex-row lg:items-center"
         style={{
           marginBottom: '1.5rem',
-          gap: '1.5rem'
+          gap: '0.5rem'
         }}
       >
         <label 
@@ -205,10 +205,10 @@ const ConfigPanel: React.FC<ConfigPanelProps> = ({
 
       {/* Phone Number */}
       <div 
-        className="flex items-center"
+        className="flex flex-col lg:flex-row lg:items-center"
         style={{
           marginBottom: '1.5rem',
-          gap: '1.5rem'
+          gap: '0.5rem'
         }}
       >
         <label 
@@ -253,10 +253,10 @@ const ConfigPanel: React.FC<ConfigPanelProps> = ({
 
       {/* Aggregator */}
       <div 
-        className="flex items-center"
+        className="flex flex-col lg:flex-row lg:items-center"
         style={{
           marginBottom: '1.5rem',
-          gap: '1.5rem'
+          gap: '0.5rem'
         }}
       >
         <label 

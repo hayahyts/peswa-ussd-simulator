@@ -184,57 +184,83 @@ export default function Home() {
     <div className="flex flex-col min-h-screen h-screen overflow-hidden">
       {/* Row 1: Header - 5vh */}
       <header 
+        className="px-4 lg:px-12"
         style={{
           height: '5vh',
           minHeight: '50px',
           background: 'linear-gradient(135deg, #543d9a 0%, #6b4fb8 100%)',
           display: 'flex',
           alignItems: 'center',
-          padding: '0 3rem',
           position: 'relative',
           zIndex: 10
         }}
       >
-        <div style={{
-          fontSize: '1.75rem',
-          fontWeight: 700,
-          color: '#FFFFFF',
-          fontStyle: 'italic',
-          letterSpacing: '-0.5px'
-        }}>
+        <div 
+          className="text-2xl lg:text-3xl"
+          style={{
+            fontWeight: 700,
+            color: '#FFFFFF',
+            fontStyle: 'italic',
+            letterSpacing: '-0.5px'
+          }}
+        >
           Peswa
         </div>
       </header>
 
       {/* Row 2: Main Content - 72.5vh */}
       <main 
+        className="flex-col lg:flex-row justify-start lg:justify-center"
         style={{
           height: '72.5vh',
           minHeight: '500px',
           background: 'linear-gradient(135deg, #543d9a 0%, #6b4fb8 100%)',
           display: 'flex',
           alignItems: 'center',
-          justifyContent: 'center',
-          gap: '3rem',
-          padding: '0 3rem 1.5rem 3rem',
+          gap: '1.5rem',
+          padding: '3rem 1rem 1rem 1rem',
           position: 'relative',
-          overflow: 'visible'
+          overflow: 'auto'
         }}
       >
-        {/* Config Panel */}
+        {/* Phone Simulator - Shows first on mobile, second on desktop */}
         <div 
+          className="flex justify-center relative order-1 lg:order-2"
           style={{
-            flex: '0 0 45%',
+            flex: '0 0 auto',
+            width: '100%',
+            maxWidth: '380px',
+            zIndex: 1,
+            marginTop: 0
+          }}
+        >
+          <PhoneSimulator
+            currentResponse={currentResponse}
+            onSend={handleSend}
+            onReset={handleReset}
+            isLoading={isLoading}
+            sessionActive={currentSessionId !== null}
+            network={network}
+          />
+        </div>
+
+        {/* Config Panel - Shows second on mobile, first on desktop */}
+        <div 
+          className="order-2 lg:order-1"
+          style={{
+            flex: '0 0 auto',
+            width: '100%',
             maxWidth: '550px',
             background: '#FFFFFF',
             borderRadius: '1rem',
-            padding: '2.5rem',
+            padding: '1.5rem',
             boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1)',
             height: 'fit-content',
             animation: 'slideInLeft 0.6s ease-out'
           }}
         >
           <p 
+            className="hidden lg:block"
             style={{
               fontSize: '0.9rem',
               lineHeight: 1.6,
@@ -264,29 +290,11 @@ export default function Home() {
             onNewSession={handleNewSession}
           />
         </div>
-
-        {/* Phone Simulator */}
-        <div 
-          className="flex justify-center relative"
-          style={{
-            flex: '0 0 35%',
-            maxWidth: '380px',
-            zIndex: 1
-          }}
-        >
-          <PhoneSimulator
-            currentResponse={currentResponse}
-            onSend={handleSend}
-            onReset={handleReset}
-            isLoading={isLoading}
-            sessionActive={currentSessionId !== null}
-            network={network}
-          />
-        </div>
       </main>
 
       {/* Row 3: Footer - 7.5vh */}
       <footer 
+        className="px-4 lg:px-12"
         style={{
           height: '7.5vh',
           minHeight: '60px',
@@ -295,13 +303,12 @@ export default function Home() {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          padding: '0 3rem',
           position: 'relative',
           zIndex: 0
         }}
       >
-        <span style={{ fontSize: '0.875rem', color: '#6B7280' }}>© 2025. Peswa Finance</span>
-        <span style={{ fontSize: '0.875rem', color: '#9CA3AF', fontWeight: 500 }}>v1.0</span>
+        <span className="text-xs lg:text-sm" style={{ color: '#6B7280' }}>© 2025. Peswa Finance</span>
+        <span className="text-xs lg:text-sm" style={{ color: '#9CA3AF', fontWeight: 500 }}>v1.0</span>
       </footer>
 
       {/* Row 4: Logger - Fixed Bottom */}

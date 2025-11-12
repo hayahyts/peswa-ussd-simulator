@@ -529,3 +529,109 @@
     }
 }
 
+/* Responsive Styles for Mobile */
+@media (max-width: 1023px) {
+    .phone-frame {
+        width: 280px;
+        height: 570px;
+        padding: 12px;
+        border-radius: 32px;
+        /* Remove float animation on mobile to prevent movement issues */
+        animation: slideInRight 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s both;
+    }
+    
+    .phone-notch {
+        top: 12px;
+        width: 120px;
+        height: 24px;
+    }
+    
+    .notch-camera {
+        width: 8px;
+        height: 8px;
+    }
+    
+    .notch-speaker {
+        width: 45px;
+        height: 4px;
+    }
+    
+    .phone-screen {
+        border-radius: 22px;
+    }
+    
+    .status-bar {
+        padding: 42px 16px 10px 16px !important;
+    }
+    
+    .network-info {
+        font-size: 12px;
+    }
+    
+    .time-display {
+        font-size: 12px;
+    }
+    
+    .ussd-response-container {
+        padding: 16px !important;
+    }
+    
+    .empty-state {
+        padding: 30px 16px !important;
+    }
+    
+    .empty-icon {
+        width: 56px !important;
+        height: 56px !important;
+        margin-bottom: 14px !important;
+    }
+    
+    .empty-text {
+        font-size: 13px !important;
+    }
+    
+    .empty-hint {
+        font-size: 11px !important;
+    }
+    
+    .response-card {
+        padding: 14px !important;
+    }
+    
+    .response-title {
+        font-size: 14px !important;
+    }
+    
+    .menu-item {
+        padding: 10px 12px !important;
+        font-size: 12px !important;
+    }
+    
+    .prompt-message,
+    .end-message {
+        padding: 12px 14px !important;
+        font-size: 12px !important;
+    }
+    
+    .input-area {
+        padding: 14px 16px 16px 16px !important;
+    }
+    
+    .ussd-input {
+        padding: 10px 14px !important;
+        font-size: 14px;
+    }
+    
+    .btn {
+        padding: 10px 14px !important;
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 640px) {
+    .phone-frame {
+        width: min(280px, calc(100vw - 2rem));
+        height: min(570px, calc(100vh - 300px));
+    }
+}
+
