@@ -17,25 +17,8 @@ import {
 } from '@/lib/types';
 
 export default function Home() {
-  // Determine default host URL based on environment
-  const getDefaultHostUrl = () => {
-    if (typeof window === 'undefined') {
-      return 'https://mtn-uncdf.onrender.com/api/v1/loans/ussd';
-    }
-    
-    const currentUrl = window.location.href;
-    
-    // If running on the Netlify deployment
-    if (currentUrl.includes('6914cd8a7892a109c0ea11ca--ussdsimulator.netlify.app')) {
-      return 'https://mtn-uncdf.onrender.com/api/v1/loans/ussd';
-    }
-    
-    // If running on localhost, keep the local host
-    return 'http://localhost:8080/api/v1/loans/ussd';
-  };
-
-  // Configuration state - use lazy initializer to set correct value immediately
-  const [hostUrl, setHostUrl] = useState(() => getDefaultHostUrl());
+  // Configuration state
+  const [hostUrl, setHostUrl] = useState('https://mtn-uncdf.onrender.com/api/v1/loans/ussd');
   const [method, setMethod] = useState('POST');
   const [network, setNetwork] = useState<NetworkOperator>('MTN');
   const [phoneNumber, setPhoneNumber] = useState('0546628393');
@@ -50,8 +33,8 @@ export default function Home() {
   // Logger state
   const [logs, setLogs] = useState<LogEntry[]>([]);
 
-  // API client - initialize with correct host URL
-  const [apiClient] = useState(() => new UssdApiClient(getDefaultHostUrl()));
+  // API client
+  const [apiClient] = useState(() => new UssdApiClient('https://mtn-uncdf.onrender.com/api/v1/loans/ussd'));
 
   // Update API client when host URL changes
   useEffect(() => {
