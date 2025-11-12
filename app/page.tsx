@@ -34,8 +34,8 @@ export default function Home() {
     return 'http://localhost:8080/api/v1/loans/ussd';
   };
 
-  // Configuration state
-  const [hostUrl, setHostUrl] = useState('http://localhost:8080/api/v1/loans/ussd');
+  // Configuration state - use lazy initializer to set correct value immediately
+  const [hostUrl, setHostUrl] = useState(() => getDefaultHostUrl());
   const [method, setMethod] = useState('POST');
   const [network, setNetwork] = useState<NetworkOperator>('MTN');
   const [phoneNumber, setPhoneNumber] = useState('0546628393');
@@ -50,14 +50,8 @@ export default function Home() {
   // Logger state
   const [logs, setLogs] = useState<LogEntry[]>([]);
 
-  // API client
-  const [apiClient] = useState(() => new UssdApiClient(hostUrl));
-
-  // Set default host URL based on environment on mount
-  useEffect(() => {
-    const defaultHost = getDefaultHostUrl();
-    setHostUrl(defaultHost);
-  }, []);
+  // API client - initialize with correct host URL
+  const [apiClient] = useState(() => new UssdApiClient(getDefaultHostUrl()));
 
   // Update API client when host URL changes
   useEffect(() => {
