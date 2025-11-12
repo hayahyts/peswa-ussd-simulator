@@ -210,7 +210,7 @@ export default function Home() {
 
       {/* Row 2: Main Content - 72.5vh */}
       <main 
-        className="flex-col lg:flex-row justify-start lg:justify-center"
+        className="flex-col lg:flex-row justify-start lg:justify-center overflow-auto lg:overflow-visible"
         style={{
           height: '72.5vh',
           minHeight: '500px',
@@ -220,7 +220,7 @@ export default function Home() {
           gap: '1.5rem',
           padding: '3rem 1rem 1rem 1rem',
           position: 'relative',
-          overflow: 'auto'
+          zIndex: 5
         }}
       >
         {/* Phone Simulator - Shows first on mobile, second on desktop */}
@@ -230,7 +230,7 @@ export default function Home() {
             flex: '0 0 auto',
             width: '100%',
             maxWidth: '380px',
-            zIndex: 1,
+            zIndex: 10,
             marginTop: 0
           }}
         >
