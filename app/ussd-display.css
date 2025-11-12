@@ -533,7 +533,7 @@
 @media (max-width: 1023px) {
     .phone-frame {
         width: 280px;
-        height: 620px;
+        height: 700px;
         padding: 12px;
         border-radius: 32px;
         /* Remove float animation on mobile to prevent movement issues */
@@ -631,7 +631,7 @@
 @media (max-width: 640px) {
     .phone-frame {
         width: min(280px, calc(100vw - 2rem));
-        height: min(620px, calc(100vh - 250px));
+        height: min(700px, calc(100vh - 200px));
     }
 }
 
