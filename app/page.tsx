@@ -20,7 +20,7 @@ export default function Home() {
   // Determine default host URL based on environment
   const getDefaultHostUrl = () => {
     if (typeof window === 'undefined') {
-      return 'http://localhost:8080/api/v1/loans/ussd';
+      return 'https://mtn-uncdf.onrender.com/api/v1/loans/ussd';
     }
     
     const currentUrl = window.location.href;
@@ -31,7 +31,7 @@ export default function Home() {
     }
     
     // If running on localhost, keep the local host
-    return 'https://mtn-uncdf.onrender.com/api/v1/loans/ussd';
+    return 'http://localhost:8080/api/v1/loans/ussd';
   };
 
   // Configuration state - use lazy initializer to set correct value immediately
