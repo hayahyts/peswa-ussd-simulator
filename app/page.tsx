@@ -17,6 +17,23 @@ import {
 } from '@/lib/types';
 
 export default function Home() {
+  // Determine default host URL based on environment
+  const getDefaultHostUrl = () => {
+    if (typeof window === 'undefined') {
+      return 'http://localhost:8080/api/v1/loans/ussd';
+    }
+    
+    const currentUrl = window.location.href;
+    
+    // If running on the Netlify deployment
+    if (currentUrl.includes('6914cd8a7892a109c0ea11ca--ussdsimulator.netlify.app')) {
+      return 'https://mtn-uncdf.onrender.com/api/v1/loans/ussd';
+    }
+    
+    // If running on localhost, keep the local host
+    return 'http://localhost:8080/api/v1/loans/ussd';
+  };
+
   // Configuration state
   const [hostUrl, setHostUrl] = useState('http://localhost:8080/api/v1/loans/ussd');
   const [method, setMethod] = useState('POST');
@@ -35,6 +52,12 @@ export default function Home() {
 
   // API client
   const [apiClient] = useState(() => new UssdApiClient(hostUrl));
+
+  // Set default host URL based on environment on mount
+  useEffect(() => {
+    const defaultHost = getDefaultHostUrl();
+    setHostUrl(defaultHost);
+  }, []);
 
   // Update API client when host URL changes
   useEffect(() => {
