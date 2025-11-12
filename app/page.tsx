@@ -184,7 +184,6 @@ export default function Home() {
     <div className="flex flex-col min-h-screen h-screen overflow-hidden">
       {/* Row 1: Header - 5vh */}
       <header 
-        className="px-4 lg:px-12"
         style={{
           height: '5vh',
           minHeight: '50px',
@@ -192,7 +191,9 @@ export default function Home() {
           display: 'flex',
           alignItems: 'center',
           position: 'relative',
-          zIndex: 10
+          zIndex: 10,
+          paddingLeft: '1.5rem',
+          paddingRight: '1.5rem'
         }}
       >
         <div 
@@ -218,7 +219,10 @@ export default function Home() {
           display: 'flex',
           alignItems: 'center',
           gap: '1.5rem',
-          padding: '3rem 1rem 1rem 1rem',
+          paddingTop: '3rem',
+          paddingBottom: '1rem',
+          paddingLeft: '1.5rem',
+          paddingRight: '1.5rem',
           position: 'relative',
           zIndex: 5
         }}
@@ -294,7 +298,6 @@ export default function Home() {
 
       {/* Row 3: Footer - 7.5vh */}
       <footer 
-        className="px-4 lg:px-12"
         style={{
           height: '7.5vh',
           minHeight: '60px',
@@ -304,11 +307,13 @@ export default function Home() {
           alignItems: 'center',
           justifyContent: 'space-between',
           position: 'relative',
-          zIndex: 0
+          zIndex: 0,
+          paddingLeft: '1.5rem',
+          paddingRight: '1.5rem'
         }}
       >
-        <span className="text-xs lg:text-sm" style={{ color: '#6B7280' }}>© 2025. Peswa Finance</span>
-        <span className="text-xs lg:text-sm" style={{ color: '#9CA3AF', fontWeight: 500 }}>v1.0</span>
+        <span style={{ fontSize: '0.875rem', color: '#6B7280' }}>© 2025. Peswa Finance</span>
+        <span style={{ fontSize: '0.875rem', color: '#9CA3AF', fontWeight: 500 }}>v1.0</span>
       </footer>
 
       {/* Row 4: Logger - Fixed Bottom */}
