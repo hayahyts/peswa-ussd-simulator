@@ -113,12 +113,10 @@ export default function Home() {
 
     // Build request
     const request: RootUSSDRequest = {
-      USSDReq: {
-        msisdn: session.phoneNumber,
-        msg: userInput,
-        network: session.network,
-        UserSessionId: session.sessionId,
-      },
+      msisdn: session.phoneNumber,
+      msg: userInput,
+      network: session.network,
+      UserSessionID: session.sessionId,
     };
 
     // Send request

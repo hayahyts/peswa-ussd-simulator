@@ -1,13 +1,9 @@
 // USSD API Request Types
-export interface USSDRequest {
+export interface RootUSSDRequest {
   msisdn: string;
   msg: string;
   network: string;
-  UserSessionId: string;
-}
-
-export interface RootUSSDRequest {
-  USSDReq: USSDRequest;
+  UserSessionID: string;
 }
 
 // USSD API Response Types
