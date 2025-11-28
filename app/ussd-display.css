@@ -259,17 +259,17 @@
     letter-spacing: 0.5px !important;
 }
 
-.status-badge.menu {
+.status-badge.showMenu {
     background: #EFF6FF !important;
     color: #60A5FA !important;
 }
 
-.status-badge.prompt {
+.status-badge.input {
     background: #FEF3C7 !important;
     color: #F59E0B !important;
 }
 
-.status-badge.end {
+.status-badge.prompt {
     background: #F0FDF4 !important;
     color: #34D399 !important;
 }

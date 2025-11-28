@@ -46,7 +46,7 @@ const UssdScreen: React.FC<UssdScreenProps> = ({ response, isLoading }) => {
   }
 
   const { USSDResp } = response;
-  const action = USSDResp.action.toLowerCase();
+  const action = USSDResp.action;
 
   // Parse menus if it's a string representation of an array
   const parseMenus = (menus: string | string[]): { isArray: boolean; items: string[] } => {
@@ -90,7 +90,7 @@ const UssdScreen: React.FC<UssdScreenProps> = ({ response, isLoading }) => {
   };
 
   const parsedMenus = parseMenus(USSDResp.menus);
-  const shouldDisplayAsMenu = parsedMenus.isArray || (action === 'menu' && parsedMenus.items.length > 0);
+  const shouldDisplayAsMenu = action === 'showMenu' && (parsedMenus.isArray || parsedMenus.items.length > 0);
 
   return (
     <div className="response-card">
@@ -103,8 +103,8 @@ const UssdScreen: React.FC<UssdScreenProps> = ({ response, isLoading }) => {
 
       {/* Content */}
       <div>
-        {shouldDisplayAsMenu ? (
-          // Menu Response - Display as individual menu items
+        {action === 'showMenu' && shouldDisplayAsMenu ? (
+          // showMenu - Display menu options as list
           <div className="menu-list">
             {parsedMenus.items.map((menuItem, index) => (
               <div 
@@ -116,13 +116,13 @@ const UssdScreen: React.FC<UssdScreenProps> = ({ response, isLoading }) => {
               </div>
             ))}
           </div>
-        ) : action === 'prompt' && typeof USSDResp.menus === 'string' ? (
-          // Prompt Response
+        ) : action === 'input' ? (
+          // input - Request information from user (menus should be empty)
           <div className="prompt-message">
-            {USSDResp.menus}
+            {/* Title is already displayed above, menus should be empty for input */}
           </div>
-        ) : action === 'end' && typeof USSDResp.menus === 'string' ? (
-          // End Response
+        ) : action === 'prompt' ? (
+          // prompt - End session, no input required
           <div className="end-message">
             <svg className="success-icon" width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
@@ -133,15 +133,15 @@ const UssdScreen: React.FC<UssdScreenProps> = ({ response, isLoading }) => {
               />
             </svg>
             <div>
-              {USSDResp.menus}
+              {/* Session ended */}
             </div>
           </div>
         ) : (
           // Fallback for unknown format
           <div className="prompt-message">
-            {typeof USSDResp.menus === 'string'
+            {typeof USSDResp.menus === 'string' && USSDResp.menus
               ? USSDResp.menus
-              : JSON.stringify(USSDResp.menus, null, 2)}
+              : ''}
           </div>
         )}
       </div>

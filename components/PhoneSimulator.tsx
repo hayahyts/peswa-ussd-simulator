@@ -44,14 +44,17 @@ const PhoneSimulator: React.FC<PhoneSimulatorProps> = ({
     }
   }, [isLoading]);
 
+  // Check if session is ended (prompt action)
+  const isSessionEnded = currentResponse?.USSDResp?.action === 'prompt';
+
   const handleSend = () => {
-    if (userInput.trim() || !sessionActive) {
+    if ((userInput.trim() || !sessionActive) && !isSessionEnded) {
       onSend(userInput.trim());
     }
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
+    if (e.key === 'Enter' && !e.shiftKey && !isSessionEnded) {
       e.preventDefault();
       handleSend();
     }
@@ -92,11 +95,11 @@ const PhoneSimulator: React.FC<PhoneSimulatorProps> = ({
             <input
               type="text"
               className="ussd-input"
-              placeholder="eg. *721#"
+              placeholder={isSessionEnded ? "Session ended" : "eg. *721#"}
               value={userInput}
               onChange={(e) => setUserInput(e.target.value)}
               onKeyPress={handleKeyPress}
-              disabled={isLoading}
+              disabled={isLoading || isSessionEnded}
               maxLength={20}
             />
           </div>
@@ -114,7 +117,7 @@ const PhoneSimulator: React.FC<PhoneSimulatorProps> = ({
             <button
               className="btn btn-send"
               onClick={handleSend}
-              disabled={isLoading}
+              disabled={isLoading || isSessionEnded}
             >
               <span>Send</span>
               <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">

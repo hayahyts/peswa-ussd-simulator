@@ -122,38 +122,37 @@ npm run dev
 
 ### Response Types
 
-**Menu Response**:
+The response must contain one of three action types:
+
+**showMenu Response** - Display a list of options for user to select from:
 ```json
 {
   "USSDResp": {
-    "action": "menu",
-    "menus": ["1. Option 1", "2. Option 2"],
-    "title": "Select an option",
-    "key": "powered by..."
+    "action": "showMenu",
+    "menus": ["1. Option 1", "2. Option 2", "3. Option 3"],
+    "title": "Kindly select an option."
   }
 }
 ```
 
-**Prompt Response**:
+**input Response** - Request information from the user:
+```json
+{
+  "USSDResp": {
+    "action": "input",
+    "menus": "",
+    "title": "Enter your name:"
+  }
+}
+```
+
+**prompt Response** - End the session, no input required:
 ```json
 {
   "USSDResp": {
     "action": "prompt",
-    "menus": "Enter your PIN",
-    "title": "PIN Setup",
-    "key": "powered by..."
-  }
-}
-```
-
-**End Response**:
-```json
-{
-  "USSDResp": {
-    "action": "end",
-    "menus": "Success! Registration completed",
-    "title": "Registration",
-    "key": "powered by..."
+    "menus": "",
+    "title": "Thank you for your interest in Quickpay! To find out more, please visit www.nsano.com or call 036 219 3731 to learn more."
   }
 }
 ```
@@ -238,8 +237,11 @@ npm run lint
 
 **Problem**: Response doesn't display correctly
 - Check response matches the API contract
-- Verify `action` field is one of: `menu`, `prompt`, `end`
-- Ensure `menus` field type matches action type
+- Verify `action` field is one of: `input`, `showMenu`, `prompt`
+- Ensure `menus` field type matches action type:
+  - `showMenu`: menus should be an array of strings
+  - `input`: menus should be an empty string
+  - `prompt`: menus should be an empty string
 
 ## Contributing
 

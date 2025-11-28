@@ -8,10 +8,10 @@ export interface RootUSSDRequest {
 
 // USSD API Response Types
 export interface USSDResponse {
-  action: string;
+  action: 'input' | 'showMenu' | 'prompt';
   menus: string | string[];
   title: string;
-  key: string;
+  key?: string;
 }
 
 export interface RootResponse {
@@ -52,7 +52,7 @@ export interface ConfigState {
 export type NetworkOperator = 'MTN' | 'Vodafone' | 'AirtelTigo';
 
 // Response Action Types
-export type ResponseAction = 'prompt' | 'menu' | 'end';
+export type ResponseAction = 'input' | 'showMenu' | 'prompt';
 
 // Logger Entry
 export interface LogEntry {
